@@ -1,0 +1,14 @@
+# 由于版权约定，训练数据不可透露
+dataset/*.txt
+
+# 字典文件
+dic/dic.txt
+
+# 正反向最大匹配分词结果
+seg_result/*
+
+# 分词结果正确性
+evaluate/score.txt
+
+# 分词所用时间
+evaluate/TimeCost.txt
