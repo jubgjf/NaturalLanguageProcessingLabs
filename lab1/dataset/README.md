@@ -2,3 +2,5 @@
 
 - 199801_segpos.txt
 - 199801_sent.txt
+- 199802_segpos.txt
+- name.txt
