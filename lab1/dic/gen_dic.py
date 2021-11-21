@@ -1,4 +1,4 @@
-def read_src(filename: str) -> dict:
+def read_src(filename_list: list) -> dict:
     """读取语料库并生成词典，词典的格式为
     {
         "词": 词频,
@@ -7,50 +7,41 @@ def read_src(filename: str) -> dict:
     }
 
     Args:
-        filename: 语料库文件路径
+        filename_list: 语料库文件路径
 
     Returns:
         返回词典 dict
     """
 
     dic: dict = {}
-    with open(filename, "r") as f:
-        for line in f:
-            word_list: list = line.split("  ")  # 训练集的一行
-            word_list = word_list[1:-1]  # 去除时间和换行符
-            for word in word_list:
-                # word_ps[0] -> 词
-                # word_ps[1] -> 词性
-                word_ps: list = word.split("/")
-                word = word_ps[0].replace("[", "").replace("]", "")  # 删除中括号
+    for filename in filename_list:
+        with open(filename, "r") as f:
+            for line in f:
+                if line == "\n":
+                    # 空行，跳过
+                    continue
+                elif line.startswith("1998"):
+                    word_list: list[str] = line.split(" ")  # 训练集的一行
+                    word_list = word_list[1:-1]  # 去除时间和换行符
+                    word_list = [i for i in word_list if i != ""]  # 去除用 "" 切分后剩下的空字符
+                    for word in word_list:
+                        # word_ps[0] -> 词
+                        # word_ps[1] -> 词性
+                        word_ps: list = word.split("/")
+                        word = word_ps[0].replace("[", "").replace("]", "")  # 删除中括号
 
-                if word not in dic.keys():
-                    dic[word] = 1
+                        if word not in dic.keys():
+                            dic[word] = 1
+                        else:
+                            dic[word] += 1
                 else:
-                    dic[word] += 1
-    return dic
+                    # 人名补充
+                    word = line.strip()
+                    if word not in dic.keys():
+                        dic[word] = 1
+                    else:
+                        dic[word] += 1
 
-
-def read_dic(filename: str) -> dict:
-    """从文件中读取词典，词典格式为
-    {
-        "词": 词频,
-        ...,
-        "词": 词频,
-    }
-
-    Args:
-        filename: 语料库文件路径
-
-    Returns:
-        返回词典 dict
-    """
-
-    dic: dict = {}
-    with open(filename, "r") as f:
-        for line in f:
-            word_ps: list = line.strip().split(" ")
-            dic[word_ps[0]] = int(word_ps[1])
     return dic
 
 
@@ -72,5 +63,5 @@ def write_dic(filename: str, dic: dict) -> None:
 
 
 if __name__ == "__main__":
-    dic = read_src("lab1/dataset/199801_sent.txt")
+    dic = read_src(["lab1/dataset/199801_segpos.txt", "lab1/dataset/199802_segpos.txt", "lab1/dataset/name.txt"])
     write_dic("lab1/dic/dic.txt", dic)
