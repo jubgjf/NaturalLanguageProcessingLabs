@@ -160,11 +160,15 @@ void bmm_fast(const char* src_filename, const char* bmm_filename,
             wchar_t top_w[1024] = {0};
             pop(stack, top_w);
             if (!wcscmp(top_w, L"")) {
-                break;
+                continue;
             }
             char top[10240] = {0};
             wcs2cs(top, top_w);
             fprintf(bmm_fp, "%s/ ", top);
+
+            if (is_empty(stack)) {
+                break;
+            }
         }
         fprintf(bmm_fp, "\n");
     }
