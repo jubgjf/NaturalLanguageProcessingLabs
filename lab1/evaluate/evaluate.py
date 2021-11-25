@@ -242,7 +242,7 @@ def calc_f(precision: float, recall: float) -> float:
         返回准确率和召回率的调和平均
     """
 
-    return 0.5 * (1 / precision + 1 / recall)
+    return (2 * precision * recall) / (precision + recall)
 
 
 if __name__ == "__main__":
