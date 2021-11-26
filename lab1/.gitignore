@@ -4,6 +4,9 @@ dataset/*.txt
 # 字典文件
 dic/dic.txt
 
+# 二元文法字典文件
+dic/bi_dic.txt
+
 # 正反向最大匹配分词结果
 seg_result/*
 
