@@ -205,10 +205,11 @@ def unigram(dic_filename: str, sent_filename: str, seg_result_filename: str) -> 
 
                 # 分词后的句子
                 seg_sentence: str = ""
-                curr_index = max(route.keys())
+                curr_index = max(route.keys()) if len(route) > 0 else len(sentence)
                 while True:
-                    seg_sentence = sentence[route[curr_index]:curr_index] + "/ " + seg_sentence
-                    curr_index = route[curr_index]
+                    pred_index = route[curr_index] if curr_index in route.keys() else curr_index - 1
+                    seg_sentence = sentence[pred_index:curr_index] + "/ " + seg_sentence
+                    curr_index = pred_index
                     if curr_index == 0:
                         break
 
