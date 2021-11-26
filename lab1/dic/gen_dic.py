@@ -63,5 +63,5 @@ def write_dic(filename: str, dic: dict) -> None:
 
 
 if __name__ == "__main__":
-    dic = read_src(["lab1/dataset/199801_segpos.txt", "lab1/dataset/199802_segpos.txt", "lab1/dataset/name.txt"])
+    dic = read_src(["lab1/dataset/199802_segpos.txt"])
     write_dic("lab1/dic/dic.txt", dic)
