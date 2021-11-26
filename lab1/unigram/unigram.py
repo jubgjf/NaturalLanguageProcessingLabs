@@ -186,7 +186,7 @@ def unigram(dic_filename: str, sent_filename: str, seg_result_filename: str) -> 
                     wf.write("\n")
                     continue
 
-                sentence: str = line[len("19980201-01-001-001"):].strip()
+                sentence: str = line.strip()
 
                 # 句子对应的有向无环图
                 graph: dict = {}

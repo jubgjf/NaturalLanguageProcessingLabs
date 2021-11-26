@@ -65,13 +65,10 @@ void fmm_fast(const char* src_filename, const char* fmm_filename,
         perror("open");
     }
 
-    char raw_line[10240] = {0};
-    while (fgets(raw_line, sizeof raw_line, src_fp)) {
-        // 删除空白符、换行符、日期
-        strtrim(raw_line);
-        char line[102400] = {0};
-        strmncpy(line, raw_line, strlen("19980101-01-001-001"),
-                 (int)strlen(raw_line));
+    char line[10240] = {0};
+    while (fgets(line, sizeof line, src_fp)) {
+        // 删除空白符、换行符
+        strtrim(line);
 
         // 转 wchar_t
         wchar_t line_w[102400] = {0};
@@ -122,13 +119,10 @@ void bmm_fast(const char* src_filename, const char* bmm_filename,
     // 反向最大匹配的分词结果是倒着的，需要用栈进行倒序
     struct stack* stack = stack_init();
 
-    char raw_line[10240] = {0};
-    while (fgets(raw_line, sizeof raw_line, src_fp)) {
-        // 删除空白符、换行符、日期
-        strtrim(raw_line);
-        char line[102400] = {0};
-        strmncpy(line, raw_line, strlen("19980101-01-001-001"),
-                 (int)strlen(raw_line));
+    char line[10240] = {0};
+    while (fgets(line, sizeof line, src_fp)) {
+        // 删除空白符、换行符
+        strtrim(line);
 
         // 转 wchar_t
         wchar_t line_w[102400] = {0};

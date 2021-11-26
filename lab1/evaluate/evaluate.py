@@ -36,7 +36,6 @@ def get_word_seg(seg_file: str, seg_ans_file: str) -> tuple[list, list]:
             new_word_list: list = [i for i in word_list if i != ""]
             word_list = new_word_list
 
-            word_list = word_list[1:]  # 去除时间
             if word_list[-1] == "\n":
                 # 去除换行符
                 word_list = word_list[:-1]
