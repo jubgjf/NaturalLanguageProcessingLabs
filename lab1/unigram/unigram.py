@@ -1,4 +1,5 @@
 import math
+import re
 
 
 def gen_pdic(dic: dict) -> dict:
@@ -187,6 +188,11 @@ def unigram(dic_filename: str, sent_filename: str, seg_result_filename: str) -> 
                     continue
 
                 sentence: str = line.strip()
+
+                m = re.search("[0-9]{8}-[0-9]{2}-[0-9]{3}-[0-9]{3}", line)
+                if m != None:
+                    wf.write(m.group(0) + "/ ")
+                    sentence = sentence[19:]
 
                 # 句子对应的有向无环图
                 graph: dict = {}

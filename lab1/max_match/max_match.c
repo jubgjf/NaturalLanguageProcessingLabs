@@ -2,6 +2,7 @@
 #include "../stack/stack.h"
 #include "../string/str.h"
 #include "timer.h"
+#include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -79,10 +80,34 @@ void fmm(const char* src_filename, const char* fmm_filename, struct dict* dic,
         perror("open");
     }
 
-    char line[10240] = {0};
-    while (fgets(line, sizeof line, src_fp)) {
+    // 正则表达式匹配句首日期
+    regex_t      reg;
+    const char*  pattern_date = "[0-9]{8}-[0-9]{2}-[0-9]{3}-[0-9]{3}";
+    const size_t nmatch       = 1;
+    regmatch_t   pmatch[1];
+    regcomp(&reg, pattern_date, REG_EXTENDED);
+
+    char raw_line[10240] = {0};
+    while (fgets(raw_line, sizeof raw_line, src_fp)) {
+        char line[10240] = {0};
+
+        // 跳过空行
+        if (!strcmp(raw_line, "\n")) {
+            fprintf(fmm_fp, "\n");
+            continue;
+        }
+
         // 删除空白符、换行符
-        strtrim(line);
+        strtrim(raw_line);
+
+        // 匹配日期
+        if (regexec(&reg, raw_line, nmatch, pmatch, 0) == 0) {
+            for (int i = pmatch[0].rm_so; i < pmatch[0].rm_eo; i++) {
+                fprintf(fmm_fp, "%c", raw_line[i]);
+            }
+            fprintf(fmm_fp, "/ ");
+            strmncpy(line, raw_line, pmatch[0].rm_eo, strlen(raw_line));
+        }
 
         // 转 wchar_t
         wchar_t line_w[102400] = {0};
@@ -129,13 +154,37 @@ void bmm(const char* src_filename, const char* bmm_filename, struct dict* dic,
         perror("open");
     }
 
+    // 正则表达式匹配句首日期
+    regex_t      reg;
+    const char*  pattern_date = "[0-9]{8}-[0-9]{2}-[0-9]{3}-[0-9]{3}";
+    const size_t nmatch       = 1;
+    regmatch_t   pmatch[1];
+    regcomp(&reg, pattern_date, REG_EXTENDED);
+
     // 反向最大匹配的分词结果是倒着的，需要用栈进行倒序
     struct stack* stack = stack_init();
 
-    char line[10240] = {0};
-    while (fgets(line, sizeof line, src_fp)) {
+    char raw_line[10240] = {0};
+    while (fgets(raw_line, sizeof raw_line, src_fp)) {
+        char line[10240] = {0};
+
+        // 跳过空行
+        if (!strcmp(raw_line, "\n")) {
+            fprintf(bmm_fp, "\n");
+            continue;
+        }
+
         // 删除空白符、换行符
-        strtrim(line);
+        strtrim(raw_line);
+
+        // 匹配日期
+        if (regexec(&reg, raw_line, nmatch, pmatch, 0) == 0) {
+            for (int i = pmatch[0].rm_so; i < pmatch[0].rm_eo; i++) {
+                fprintf(bmm_fp, "%c", raw_line[i]);
+            }
+            fprintf(bmm_fp, "/ ");
+            strmncpy(line, raw_line, pmatch[0].rm_eo, strlen(raw_line));
+        }
 
         // 转 wchar_t
         wchar_t line_w[102400] = {0};
