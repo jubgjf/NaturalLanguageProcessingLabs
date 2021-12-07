@@ -176,8 +176,39 @@ def bigram(uni_dic_filename: str, bi_dic_filename: str, sent_filename: str, seg_
                 # 分词结果
                 seg_sentence = ""
                 index = len(r_route) - 1
+                single_word_start: int = -1
+                single_word_end: int = -1
                 while index > 0:
                     word: str = sentence[r_route[index]:index]
+
+                    if len(word) == 1 and word != "<" and word != ">":
+                        # 单个字成词，可能是未登录词
+                        if single_word_end == -1:
+                            single_word_end = index
+                    else:
+                        # 找到了未登录词的范围
+                        if single_word_end != -1:
+                            single_word_start = index
+                            # 未登录词范围内的每一个相邻的组合都放入一元文法前缀词典和二元文法概率词典中
+                            for i in range(single_word_end, single_word_start, -1):
+                                pred: str = sentence[r_route[single_word_start]:single_word_start]
+                                prefix: str = sentence[single_word_start:i]
+                                bi_word = "-".join((pred, prefix))
+
+                                if prefix not in pred_uni_dic.keys():
+                                    pred_uni_dic[prefix] = 1
+                                else:
+                                    pred_uni_dic[prefix] += 1
+                                if bi_word not in bi_dic.keys():
+                                    bi_dic[bi_word] = 1
+                                    p_bi_dic[bi_word] = -13
+                                else:
+                                    bi_dic[bi_word] += 1
+                                    p_bi_dic[bi_word] += 0.01
+
+                            single_word_start = -1
+                            single_word_end = -1
+
                     seg_sentence = word + "/ " + seg_sentence
                     index = r_route[index]
                 seg_sentence = seg_sentence[3:-3]  # 删除句首和句尾符号
@@ -187,4 +218,4 @@ def bigram(uni_dic_filename: str, bi_dic_filename: str, sent_filename: str, seg_
 
 if __name__ == "__main__":
     bigram("lab1/dic/dic.txt", "lab1/dic/bi_dic.txt", "lab1/dataset/199801_sent.txt",
-           "lab1/seg_result/seg_LM_2.txt")
+           "lab1/seg_result/seg_LM_2_UNK.txt")

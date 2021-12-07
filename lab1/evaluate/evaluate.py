@@ -291,3 +291,14 @@ if __name__ == "__main__":
         f.write("precision = " + str(precision) + "\n")
         f.write("recall    = " + str(recall) + "\n")
         f.write("F         = " + str(F) + "\n\n")
+
+        # ===== LM 2 UNK =====
+        seg_file: str = "lab1/seg_result/seg_LM_2_UNK.txt"
+        precision: float = calc_precision(seg_file, seg_ans_file)
+        recall: float = calc_recall(seg_file, seg_ans_file)
+        F: float = calc_f(precision, recall)
+
+        f.write("===== LM 2 UNK =====\n")
+        f.write("precision = " + str(precision) + "\n")
+        f.write("recall    = " + str(recall) + "\n")
+        f.write("F         = " + str(F) + "\n\n")
