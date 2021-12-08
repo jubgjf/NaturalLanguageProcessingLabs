@@ -2,6 +2,20 @@
 
 \section{原码运行方法}
 
+\subsection{实验环境}
+
+\begin{itemize}
+  \item Arch Linux x86\_64
+        \begin{itemize}
+          \item Python 3.9.9
+          \item clang 13.0.0
+          \item GNU Make 4.3
+          \item cmake 3.22.1
+        \end{itemize}
+\end{itemize}
+
+\subsection{运行方法}
+
 以下所有程序pwd均为NaturalLanguageProcessingLabs/。
 
 \begin{itemize}
@@ -10,4 +24,5 @@
   \item 机械匹配分词：\\ cmake -B build -S .\\ cd build\\ make\\ cd ..\\ build/max\_match
   \item 一元文法分词：\\ python lab1/unigram/unigram.py
   \item 二元文法分词：\\ python lab1/bigram/bigram.py
+  \item 分词性能评价：\\ python lab1/evaluate/evaluate.py
 \end{itemize}
