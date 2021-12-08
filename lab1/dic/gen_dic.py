@@ -28,6 +28,10 @@ def read_src(filename_list: list) -> dict:
                         # word_ps[0] -> 词
                         # word_ps[1] -> 词性
                         word_ps: list = word.split("/")
+                        word_ps[1] = word_ps[1].replace("[", "").replace("]", "")  # 删除中括号
+                        if word_ps[1] == "nr":  # 人名跳过
+                            continue
+
                         word = word_ps[0].replace("[", "").replace("]", "")  # 删除中括号
 
                         if word not in dic.keys():
@@ -63,5 +67,8 @@ def write_dic(filename: str, dic: dict) -> None:
 
 
 if __name__ == "__main__":
-    dic = read_src(["lab1/dataset/199802_segpos.txt"])
+    dic = read_src(["lab1/dataset/199801_segpos.txt"])
     write_dic("lab1/dic/dic.txt", dic)
+
+    dic = read_src(["lab1/dataset/199801_segpos.txt", "lab1/dataset/199802_segpos.txt"])
+    write_dic("lab1/dic/bi_dic_uni.txt", dic)

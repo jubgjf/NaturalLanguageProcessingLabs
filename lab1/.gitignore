@@ -5,7 +5,8 @@ dataset/*.txt
 dic/dic.txt
 
 # 二元文法字典文件
-dic/bi_dic.txt
+dic/bi_dic_uni.txt
+dic/bi_dic_bi.txt
 
 # 正反向最大匹配分词结果
 seg_result/*

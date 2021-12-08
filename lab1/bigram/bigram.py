@@ -186,5 +186,5 @@ def bigram(uni_dic_filename: str, bi_dic_filename: str, sent_filename: str, seg_
 
 
 if __name__ == "__main__":
-    bigram("lab1/dic/dic.txt", "lab1/dic/bi_dic.txt", "lab1/dataset/199801_sent.txt",
+    bigram("lab1/dic/bi_dic_uni.txt", "lab1/dic/bi_dic_bi.txt", "lab1/dataset/199801_sent.txt",
            "lab1/seg_result/seg_LM_2.txt")

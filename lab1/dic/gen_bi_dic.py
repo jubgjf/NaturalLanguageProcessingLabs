@@ -26,6 +26,11 @@ def read_src(filename_list: list) -> dict:
                     word_list = [i for i in word_list if i != ""]  # 去除用 "" 切分后剩下的空字符
                     word_list = [">"] + word_list + ["<"]  # 句首和句尾符号
                     for i in range(0, len(word_list) - 1):
+                        if word_list[i] != "<" and word_list[i] != ">":
+                            ps: str = word_list[i].split("/")[1].replace("[", "").replace("]", "")
+                            if ps == "nr":  # 人名跳过
+                                continue
+
                         pred_word = word_list[i].split("/")[0].replace("[", "").replace("]", "")
                         curr_word = word_list[i + 1].split("/")[0].replace("[", "").replace("]", "")
                         bi_word = "-".join((pred_word, curr_word))
@@ -56,5 +61,5 @@ def write_dic(filename: str, dic: dict) -> None:
 
 
 if __name__ == "__main__":
-    dic = read_src(["lab1/dataset/199802_segpos.txt"])
-    write_dic("lab1/dic/bi_dic.txt", dic)
+    dic = read_src(["lab1/dataset/199801_segpos.txt", "lab1/dataset/199802_segpos.txt"])
+    write_dic("lab1/dic/bi_dic_bi.txt", dic)

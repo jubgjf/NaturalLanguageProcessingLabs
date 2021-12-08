@@ -223,4 +223,4 @@ def unigram(dic_filename: str, sent_filename: str, seg_result_filename: str) -> 
 
 
 if __name__ == "__main__":
-    unigram("lab1/dic/dic.txt", "lab1/dataset/199801_sent.txt", "lab1/seg_result/seg_LM.txt")
+    unigram("lab1/dic/bi_dic_uni.txt", "lab1/dataset/199801_sent.txt", "lab1/seg_result/seg_LM.txt")
