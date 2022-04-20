@@ -11,6 +11,8 @@ add_executable(
         lab1/max_match/max_match.h
         lab1/max_match/max_match_fast.c
         lab1/max_match/max_match_fast.h
+        lab1/max_match/max_match_threaded.c
+        lab1/max_match/max_match_threaded.h
         lab1/string/str.c
         lab1/string/str.h
         lab1/stack/stack.c
@@ -18,3 +20,9 @@ add_executable(
         lab1/hashmap/hashmap.c
         lab1/hashmap/hashmap.h
 )
+
+target_link_libraries(max_match PRIVATE Threads::Threads)
+
+# ===== <pthread.h> 多线程 =====
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
