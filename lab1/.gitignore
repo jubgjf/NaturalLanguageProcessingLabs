@@ -9,7 +9,7 @@ dic/bi_dic_uni.txt
 dic/bi_dic_bi.txt
 
 # 正反向最大匹配分词结果
-seg_result/*
+seg_result/*.txt
 
 # 分词结果正确性
 evaluate/score.txt
